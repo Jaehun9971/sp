@@ -1,6 +1,5 @@
 package com.example.app;
 
-<<<<<<< HEAD
 import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.pm.PackageManager;
@@ -9,10 +8,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText nameInput, phoneInput;
     Button saveBtn, addButton;
     ListView contactListView;
+    LinearLayout inputLayout;
     ArrayAdapter<String> adapter;
     ArrayList<String> contactDisplayList = new ArrayList<>();
 
@@ -38,17 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // XML에서 정의한 ID에 맞게 초기화
+        // XML 연결
         nameInput = findViewById(R.id.nameInput);
         phoneInput = findViewById(R.id.phoneInput);
         saveBtn = findViewById(R.id.saveBtn);
         addButton = findViewById(R.id.button);
         contactListView = findViewById(R.id.contactListView);
+        inputLayout = findViewById(R.id.inputLayout);
 
-        // 전화번호 자동 하이픈
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        // 연락처 리스트 표시용 어댑터
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contactDisplayList);
         contactListView.setAdapter(adapter);
 
@@ -62,14 +61,10 @@ public class MainActivity extends AppCompatActivity {
             loadContacts();
         }
 
-        // 연락처 추가 버튼 클릭 시 입력 폼 보여주기
-        addButton.setOnClickListener(v -> {
-            findViewById(R.id.nameInput).setVisibility(View.VISIBLE);
-            findViewById(R.id.phoneInput).setVisibility(View.VISIBLE);
-            saveBtn.setVisibility(View.VISIBLE);
-        });
+        // 연락처 추가 버튼 → 입력 폼 보이기
+        addButton.setOnClickListener(v -> inputLayout.setVisibility(View.VISIBLE));
 
-        // 저장 버튼 클릭 시 연락처 저장
+        // 저장 버튼 클릭 → 연락처 추가 및 폼 숨기기
         saveBtn.setOnClickListener(v -> {
             String name = nameInput.getText().toString().trim();
             String phone = phoneInput.getText().toString().trim();
@@ -78,22 +73,19 @@ public class MainActivity extends AppCompatActivity {
                 addContact(name, phone);
                 nameInput.setText("");
                 phoneInput.setText("");
-                nameInput.setVisibility(View.GONE);
-                phoneInput.setVisibility(View.GONE);
-                saveBtn.setVisibility(View.GONE);
+                inputLayout.setVisibility(View.GONE);
             } else {
                 Toast.makeText(this, "이름과 전화번호를 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // 이름 입력 후 엔터 → 전화번호 입력으로 이동
+        // 엔터 누르면 전화번호 입력으로 포커스 이동
         nameInput.setOnEditorActionListener((v, actionId, event) -> {
             phoneInput.requestFocus();
             return true;
         });
     }
 
-    // 연락처 추가 메소드
     private void addContact(String name, String phone) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<>();
 
@@ -121,14 +113,13 @@ public class MainActivity extends AppCompatActivity {
         try {
             getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
             Toast.makeText(this, "연락처가 추가되었습니다.", Toast.LENGTH_SHORT).show();
-            loadContacts(); // 추가 후 목록 새로고침
+            loadContacts();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "연락처 추가 중 오류 발생", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // 연락처 불러오기
     private void loadContacts() {
         contactDisplayList.clear();
 
@@ -150,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    // 권한 처리 결과
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -165,27 +155,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-=======
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
-}
->>>>>>> bf6fddbe55fc9dd0c9f324af91f1332fa7412d47

@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/txtList"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
@@ -27,39 +27,39 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
             android:text="연락처 추가" />
-
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <ListView
             android:id="@+id/contactListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="1dp"
-            android:divider="@android:color/darker_gray" />
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:padding="10dp">
 
         <EditText
             android:id="@+id/nameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이름 입력"
-            android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/phoneInput"
@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:hint="전화번호 입력"
             android:inputType="phone"
-            android:padding="10dp"
             android:layout_marginTop="8dp"/>
 
         <Button
