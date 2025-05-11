@@ -37,10 +37,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-<<<<<<< HEAD
-    implementation ("com.google.code.gson:gson:2.10.1")
-=======
->>>>>>> bf6fddbe55fc9dd0c9f324af91f1332fa7412d47
+    implementation("com.google.code.gson:gson:2.10.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
