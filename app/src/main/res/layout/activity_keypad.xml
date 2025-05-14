@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
     android:id="@+id/keypadScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +9,9 @@
     android:background="#FFFFFF"
     android:padding="16dp">
 
-    <!-- 상단 1/3: 전화번호 입력창 -->
+
+
+    <!-- 상단: 전화번호 입력창 -->
     <EditText
         android:id="@+id/phoneInputField"
         android:layout_width="match_parent"
@@ -23,7 +27,7 @@
         android:gravity="center"
         android:padding="16dp" />
 
-    <!-- 하단 2/3: 키패드 -->
+    <!-- 하단: 키패드 -->
     <GridLayout
         android:id="@+id/keypadLayout"
         android:layout_width="match_parent"
@@ -34,7 +38,7 @@
         android:rowCount="4"
         android:useDefaultMargins="true">
 
-        <!-- 1~9 -->
+        <!-- 1 ~ 9 -->
         <Button android:id="@+id/btn1" android:text="1"
             android:layout_width="0dp" android:layout_height="0dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
@@ -77,4 +81,4 @@
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
     </GridLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
