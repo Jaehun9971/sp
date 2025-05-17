@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-
     android:id="@+id/keypadScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:padding="16dp">
-
-
 
     <!-- 상단: 전화번호 입력창 -->
     <EditText
@@ -35,10 +33,10 @@
         android:layout_weight="2"
         android:alignmentMode="alignMargins"
         android:columnCount="3"
-        android:rowCount="4"
+        android:rowCount="5"
         android:useDefaultMargins="true">
 
-        <!-- 1 ~ 9 -->
+        <!-- 숫자 버튼 -->
         <Button android:id="@+id/btn1" android:text="1"
             android:layout_width="0dp" android:layout_height="0dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
@@ -69,7 +67,7 @@
             android:layout_width="0dp" android:layout_height="0dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
 
-        <!-- *, 0, # -->
+        <!-- 특수 문자 -->
         <Button android:id="@+id/btnStar" android:text="*"
             android:layout_width="0dp" android:layout_height="0dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
@@ -79,6 +77,27 @@
         <Button android:id="@+id/btnSharp" android:text="#"
             android:layout_width="0dp" android:layout_height="0dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"/>
+
+        <!-- 삭제, 통화 버튼 -->
+        <Button android:id="@+id/btnDelete" android:text="←"
+            android:layout_width="0dp" android:layout_height="0dp"
+            android:layout_columnWeight="1" android:layout_rowWeight="1"/>
+        <View
+            android:layout_width="0dp" android:layout_height="0dp"
+            android:layout_columnWeight="1" android:layout_rowWeight="1"/>
+        <Button android:id="@+id/btnCall" android:text="☎"
+            android:layout_width="0dp" android:layout_height="0dp"
+            android:layout_columnWeight="1" android:layout_rowWeight="1"/>
     </GridLayout>
+
+    <!--연락처 추가 버튼-->
+    <Button
+        android:id="@+id/btnAddContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="연락처 추가"
+        android:layout_marginTop="16dp"/>
+
+
 
 </LinearLayout>
