@@ -1,12 +1,21 @@
 package com.example.app;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+
+
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.role.RoleManager;
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telecom.TelecomManager;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +31,7 @@ import java.util.ArrayList;
 
 public class KeypadFragment extends Fragment {
 
+    private static final int REQUEST_CODE_SET_DEFAULT_DIALER = 123;
     private EditText phoneInputField;
     private static final int PERMISSION_WRITE_CONTACTS = 100;
 
@@ -66,10 +76,24 @@ public class KeypadFragment extends Fragment {
         });
 
         // 통화 (기능 없음)
+        // 통화
         Button callBtn = view.findViewById(R.id.btnCall);
         callBtn.setOnClickListener(v -> {
-            // 여기에 ACTION_CALL 등 구현 가능
+            String number = phoneInputField.getText().toString().trim();
+            if (!number.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + number));
+
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{Manifest.permission.CALL_PHONE}, 200);
+                } else {
+                    startActivity(intent);
+                }
+            }
         });
+
 
         // 연락처 추가
         Button addContactBtn = view.findViewById(R.id.btnAddContact);
@@ -141,4 +165,24 @@ public class KeypadFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    private void requestSetDefaultDialer() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            RoleManager roleManager = (RoleManager) requireContext().getSystemService(RoleManager.class);
+            if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_DIALER)) {
+                if (!roleManager.isRoleHeld(RoleManager.ROLE_DIALER)) {
+                    Intent intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER);
+                    startActivityForResult(intent, 123); // 또는 상수로 대체
+                }
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            TelecomManager telecomManager = (TelecomManager) requireContext().getSystemService(Context.TELECOM_SERVICE);
+            if (telecomManager != null) {
+                Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER);
+                intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, requireContext().getPackageName());
+                startActivityForResult(intent, 123);
+            }
+        }
+    }
+
 }

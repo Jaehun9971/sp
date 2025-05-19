@@ -15,6 +15,7 @@ import android.widget.*;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
@@ -50,6 +51,14 @@ public class ContactsFragment extends Fragment {
 
         adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, contactDisplayList);
         contactListView.setAdapter(adapter);
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS},
+                    101);
+        }
+
 
         addButton.setOnClickListener(v -> {
             if (inputLayout.getVisibility() == View.VISIBLE) {
