@@ -123,7 +123,7 @@
             android:layout_width="60dp" android:layout_height="60dp"
             android:layout_columnWeight="1" android:layout_rowWeight="1"
             android:textSize="24sp"
-            android:textColor="#FFFFF"
+            android:textColor="#FFFFFF"
             android:backgroundTint="@null"
             android:background="@drawable/call_button_background"
             android:layout_gravity="center"/>
